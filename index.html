@@ -7,37 +7,67 @@
     <style>
         /* 全局设置：薄荷水感绿（专辑配色） */
         :root {
-            --bg-color: #f0f7f4;       /* 极浅薄荷绿背景 */
-            --text-main: #1e2e2a;      /* 深冷绿色文字 */
-            --text-muted: #6b8c80;     /* 灰绿色辅助文字 */
-            --card-bg: #ffffff;        /* 卡片纯白底色 */
-            --accent: #2ec4b6;         /* 清透青色点缀 */
+            --bg-color: #f0f7f4;       
+            --text-main: #1e2e2a;      
+            --text-muted: #6b8c80;     
+            --card-bg: #ffffff;        
+            --accent: #2ec4b6;         
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
             font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-            background-color: var(--bg-color);
+            /* 背景流动效果 */
+            background: linear-gradient(120deg, #f0f7f4, #e0f2ec, #d4ede3, #f0f7f4);
+            background-size: 300% 300%;
+            animation: flowBg 15s ease infinite;
+            
             color: var(--text-main);
             line-height: 1.8;
-            -webkit-font-smoothing: antialiased;
             padding-bottom: 60px;
         }
+
+        @keyframes flowBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         
+        /* 头部与头像 */
         header {
             position: sticky; top: 0;
             background-color: rgba(240, 247, 244, 0.85);
             backdrop-filter: blur(10px); z-index: 100;
-            padding: 20px 0; text-align: center;
+            padding: 30px 0 20px; text-align: center;
             border-bottom: 1px solid rgba(46, 196, 182, 0.1);
         }
-        header h1 { font-size: 1.5rem; font-weight: 500; letter-spacing: 2px; margin-bottom: 15px; }
+        .avatar {
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 15px rgba(46, 196, 182, 0.2);
+            margin-bottom: 15px;
+        }
+        header h1 { font-size: 1.4rem; font-weight: 500; letter-spacing: 2px; margin-bottom: 15px; }
         nav ul { display: flex; justify-content: center; gap: 30px; list-style: none; }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: color 0.3s ease; }
         nav a:hover { color: var(--accent); }
 
-        .section { max-width: 900px; margin: 80px auto; padding: 0 20px; scroll-margin-top: 100px; }
+        /* 核心布局：照片和随笔并排 */
+        .main-container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .column { flex: 1; width: 100%; }
+
         .section-title {
-            font-size: 1.2rem; font-weight: 500; margin-bottom: 40px; text-align: center;
+            font-size: 1.1rem; font-weight: 500; margin-bottom: 30px; text-align: center;
             letter-spacing: 1px; position: relative; display: inline-block; left: 50%; transform: translateX(-50%);
         }
         .section-title::after {
@@ -45,68 +75,108 @@
             background-color: var(--accent); margin: 10px auto 0; border-radius: 2px;
         }
 
-        /* 音乐板块 */
-        .music-container { background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(46, 196, 182, 0.05); text-align: center; }
+        /* --- 左边：9张旅行照片 --- */
+        .travel-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px; 
+        }
+        .travel-item {
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 3px solid rgba(255, 255, 255, 0.9); 
+            box-shadow: 0 8px 20px rgba(46, 196, 182, 0.15), inset 0 0 10px rgba(46, 196, 182, 0.05);
+            transition: transform 0.3s ease;
+            animation: floatPhoto 5s ease-in-out infinite;
+        }
+        
+        /* 错开9张照片的浮动时间 */
+        .travel-item:nth-child(1) { animation-delay: 0s; }
+        .travel-item:nth-child(2) { animation-delay: 0.8s; }
+        .travel-item:nth-child(3) { animation-delay: 1.6s; }
+        .travel-item:nth-child(4) { animation-delay: 2.4s; }
+        .travel-item:nth-child(5) { animation-delay: 3.2s; }
+        .travel-item:nth-child(6) { animation-delay: 0.4s; }
+        .travel-item:nth-child(7) { animation-delay: 1.2s; }
+        .travel-item:nth-child(8) { animation-delay: 2.0s; }
+        .travel-item:nth-child(9) { animation-delay: 2.8s; }
 
-        /* 旅行板块 */
-        .travel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .travel-item { border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(46, 196, 182, 0.05); transition: transform 0.3s ease; }
-        .travel-item:hover { transform: translateY(-5px); }
-        .travel-item img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 4/3; }
+        .travel-item:hover {
+            transform: translateY(-5px) scale(1.02); 
+            animation-play-state: paused;
+        }
+        .travel-item img { 
+            width: 100%; height: auto; display: block; 
+            aspect-ratio: 1/1; /* 正方形网格 */
+            object-fit: cover; 
+        }
 
-        /* 随笔板块 */
+        @keyframes floatPhoto {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- 右边：随笔卡片 --- */
         .essay-list { display: flex; flex-direction: column; gap: 20px; }
-        .essay-card { background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(46, 196, 182, 0.05); }
-        .essay-card h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 10px; }
-        .essay-date { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; }
-        .essay-excerpt { color: #4a5c56; font-size: 0.95rem; margin-bottom: 15px; }
+        .essay-card { 
+            background: var(--card-bg); padding: 25px; border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(46, 196, 182, 0.05);
+            border: 1px solid rgba(46, 196, 182, 0.08); 
+        }
+        .essay-card h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 8px; }
+        .essay-date { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
+        .essay-excerpt { color: #4a5c56; font-size: 0.9rem; margin-bottom: 12px; }
         .read-more { font-size: 0.85rem; color: var(--accent); cursor: pointer; text-decoration: underline; }
-        .full-content { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(46, 196, 182, 0.1); font-size: 0.95rem; color: #4a5c56; }
+        .full-content { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(46, 196, 182, 0.1); font-size: 0.9rem; color: #4a5c56; }
         .full-content.show { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 页脚 */
         footer { text-align: center; padding: 40px 0; font-size: 0.8rem; color: var(--text-muted); }
-        @media (max-width: 600px) { nav ul { gap: 15px; } .section { margin: 50px auto; } }
+
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; gap: 20px; }
+            nav ul { gap: 15px; }
+            header { padding: 20px 0; }
+            .travel-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
+        <!-- 使用你的中文头像名 -->
+        < img class="avatar" src="头像.jpg" alt="Zoeyyy 的头像">
         <h1>Zoeyyy's Corner</h1>
         <nav>
             <ul>
-                <li><a href=" ">音乐</a ></li>
-                <li><a href="#travel">旅行</a ></li>
+                <li><a href=" ">旅行</a ></li>
                 <li><a href="#essays">随笔</a ></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <!-- 音乐板块 -->
-        <section id="music" class="section">
-            <h2 class="section-title">歌单</h2>
-            <div class="music-container">
-                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="86" src="//music.163.com/outchain/player?type=2&id=替换你的歌曲ID&auto=0&height=66"></iframe>
-            </div>
-        </section>
-
-        <!-- 旅行板块（记得上传照片并把文件名改为 1.jpg 2.jpg 等） -->
-        <section id="travel" class="section">
+    <div class="main-container">
+        <!-- 左边：9张旅行照片，完全使用你截图里的长名字 -->
+        <section id="travel" class="column">
             <h2 class="section-title">旅行</h2>
             <div class="travel-grid">
-                <div class="travel-item">< img src="1.jpg" alt="旅行照片1"></div>
-                <div class="travel-item">< img src="2.jpg" alt="旅行照片2"></div>
-                <div class="travel-item">< img src="3.jpg" alt="旅行照片3"></div>
+                <div class="travel-item">< img src="微信图片_20260912013631_29_2.jpg" alt="旅行照片1"></div>
+                <div class="travel-item">< img src="微信图片_20260912013632_30_2.jpg" alt="旅行照片2"></div>
+                <div class="travel-item">< img src="微信图片_20260912013633_31_2.jpg" alt="旅行照片3"></div>
+                <div class="travel-item">< img src="微信图片_20260912013634_32_2.jpg" alt="旅行照片4"></div>
+                <div class="travel-item">< img src="微信图片_20260912013634_33_2.jpg" alt="旅行照片5"></div>
+                <div class="travel-item">< img src="微信图片_20260912013635_34_2.jpg" alt="旅行照片6"></div>
+                <div class="travel-item">< img src="微信图片_20260912013636_35_2.jpg" alt="旅行照片7"></div>
+                <div class="travel-item">< img src="微信图片_20260912013637_36_2.jpg" alt="旅行照片8"></div>
+                <div class="travel-item">< img src="微信图片_20260912013638_37_2.jpg" alt="旅行照片9"></div>
             </div>
         </section>
 
-        <!-- 随笔板块（保留了你的专属文字） -->
-        <section id="essays" class="section">
+        <!-- 右边：随笔 -->
+        <section id="essays" class="column">
             <h2 class="section-title">随笔</h2>
             <div class="essay-list">
-                <!-- 第一篇随笔 -->
                 <div class="essay-card">
                     <h3>山水之哲</h3>
                     <div class="essay-date">于 2026 年秋</div>
@@ -116,7 +186,6 @@
                     </div>
                     <span class="read-more" onclick="toggleEssay(this)">阅读全文 ↓</span>
                 </div>
-                <!-- 第二篇随笔 -->
                 <div class="essay-card">
                     <h3>流浪的本性</h3>
                     <div class="essay-date">于巴塞罗那的梦中</div>
@@ -128,7 +197,7 @@
                 </div>
             </div>
         </section>
-    </main>
+    </div>
 
     <footer>&copy; 2026 Zoeyyy. All Rights Reserved.</footer>
 
