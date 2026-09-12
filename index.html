@@ -44,7 +44,7 @@
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: color 0.3s ease; letter-spacing: 1px; }
         nav a:hover { color: var(--accent); }
 
-        /* --- 首屏自我介绍（夸张排版，彩色头像） --- */
+        /* --- 首屏自我介绍（夸张排版） --- */
         .hero-section {
             max-width: 1100px;
             margin: 60px auto 0;
@@ -100,7 +100,7 @@
             letter-spacing: 2px;
         }
 
-        /* 右侧头像拼贴 */
+        /* 右侧头像拼贴（恢复彩色） */
         .hero-right { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; }
         .avatar-wrapper { position: relative; width: 300px; height: 340px; display: flex; justify-content: center; align-items: center; }
         .avatar-card {
@@ -129,7 +129,7 @@
             100% { transform: translateY(0px) rotate(15deg); }
         }
 
-        /* --- 旅行板块：单独一整排 --- */
+        /* --- 旅行板块：复古胶片效果，单独一整排 --- */
         #travel {
             width: 100%;
             max-width: 1100px;
@@ -175,10 +175,15 @@
             overflow-x: auto;
             gap: 15px;
             padding: 15px 25px;
-            scrollbar-width: none;
+            scrollbar-width: none; /* Firefox 隐藏滚动条 */
+            -ms-overflow-style: none; /* IE/Edge 隐藏滚动条 */
             scroll-behavior: smooth;
+            scroll-snap-type: x mandatory; /* 胶片滚动吸附 */
+            -webkit-overflow-scrolling: touch; /* 移动端顺滑滚动 */
         }
-        .film-frames::-webkit-scrollbar { display: none; }
+        .film-frames::-webkit-scrollbar {
+            display: none; /* Chrome/Safari 隐藏滚动条 */
+        }
         .film-frame {
             flex-shrink: 0;
             width: 220px;
@@ -189,6 +194,7 @@
             cursor: zoom-in;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             -webkit-box-reflect: below 4px linear-gradient(transparent, transparent 50%, rgba(255,255,255,0.15));
+            scroll-snap-align: center; /* 滑动时居中吸附 */
         }
         .film-frame:hover {
             transform: scale(1.08);
@@ -313,12 +319,12 @@
         </div>
     </section>
 
-    <!-- 旅行板块：单独一整排 -->
+    <!-- 旅行板块：复古胶片效果，独立一排 -->
     <section id="travel">
         <h2 class="section-title">旅行</h2>
         <div class="film-container">
             <div class="film-header">
-                <h3 class="film-title-en">Where the Leaves Remember</h3>
+                <h3 class="film-title-en">Through Zoey's Eyes</h3>
                 <p class="film-title-cn">和zoey的眼睛一起看</p>
             </div>
             <div class="film-sprocket"></div>
