@@ -7,14 +7,14 @@
     <style>
         /* 全局设置：薄荷水感绿 */
         :root {
-            --bg-color: #f0f7f4;       
-            --text-main: #1e2e2a;      
-            --text-muted: #6b8c80;     
-            --card-bg: #ffffff;        
-            --accent: #2ec4b6;         
+            --bg-color: #f0f7f4;
+            --text-main: #1e2e2a;
+            --text-muted: #6b8c80;
+            --card-bg: #ffffff;
+            --accent: #2ec4b6;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+
         body {
             font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             background: linear-gradient(120deg, #f0f7f4, #e0f2ec, #d4ede3, #f0f7f4);
@@ -30,7 +30,7 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
+
         header {
             position: sticky; top: 0;
             background-color: rgba(240, 247, 244, 0.85);
@@ -72,20 +72,20 @@
         }
 
         /* --- 左边：旅行照片 --- */
-        .travel-grid { 
-            display: grid; 
+        .travel-grid {
+            display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px; 
+            gap: 15px;
         }
         .travel-item {
-            border-radius: 12px; 
-            overflow: hidden; 
-            border: 3px solid rgba(255, 255, 255, 0.9); 
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.9);
             box-shadow: 0 8px 20px rgba(46, 196, 182, 0.15), inset 0 0 10px rgba(46, 196, 182, 0.05);
             transition: transform 0.3s ease;
             animation: floatPhoto 5s ease-in-out infinite;
         }
-        
+
         .travel-item:nth-child(1) { animation-delay: 0s; }
         .travel-item:nth-child(2) { animation-delay: 0.8s; }
         .travel-item:nth-child(3) { animation-delay: 1.6s; }
@@ -97,13 +97,13 @@
         .travel-item:nth-child(9) { animation-delay: 2.8s; }
 
         .travel-item:hover {
-            transform: translateY(-5px) scale(1.02); 
+            transform: translateY(-5px) scale(1.02);
             animation-play-state: paused;
         }
-        .travel-item img { 
-            width: 100%; height: auto; display: block; 
-            aspect-ratio: 1/1; 
-            object-fit: cover; 
+        .travel-item img {
+            width: 100%; height: auto; display: block;
+            aspect-ratio: 1/1;
+            object-fit: cover;
         }
 
         @keyframes floatPhoto {
@@ -114,10 +114,10 @@
 
         /* --- 右边：随笔 --- */
         .essay-list { display: flex; flex-direction: column; gap: 20px; }
-        .essay-card { 
-            background: var(--card-bg); padding: 25px; border-radius: 16px; 
+        .essay-card {
+            background: var(--card-bg); padding: 25px; border-radius: 16px;
             box-shadow: 0 10px 30px rgba(46, 196, 182, 0.05);
-            border: 1px solid rgba(46, 196, 182, 0.08); 
+            border: 1px solid rgba(46, 196, 182, 0.08);
         }
         .essay-card h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 8px; }
         .essay-date { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
@@ -140,13 +140,12 @@
 <body>
 
     <header>
-        <!-- 去掉了 img 前面的空格 -->
-        < img class="avatar" src="头像.jpg" alt="Zoeyyy 的头像">
+        <img class="avatar" src="avatar.jpg" alt="Zoeyyy 的头像">
         <h1>Zoeyyy's Corner</h1>
         <nav>
             <ul>
-                <li><a href=" ">旅行</a ></li>
-                <li><a href="#essays">随笔</a ></li>
+                <li><a href="#travel">旅行</a></li>
+                <li><a href="#essays">随笔</a></li>
             </ul>
         </nav>
     </header>
@@ -155,16 +154,15 @@
         <section id="travel" class="column">
             <h2 class="section-title">旅行</h2>
             <div class="travel-grid">
-                <!-- 去掉了 img 前面的空格 -->
-                <div class="travel-item">< img src="微信图片_20260912013631_29_2.jpg" alt="旅行照片1"></div>
-                <div class="travel-item">< img src="微信图片_20260912013632_30_2.jpg" alt="旅行照片2"></div>
-                <div class="travel-item">< img src="微信图片_20260912013633_31_2.jpg" alt="旅行照片3"></div>
-                <div class="travel-item">< img src="微信图片_20260912013634_32_2.jpg" alt="旅行照片4"></div>
-                <div class="travel-item">< img src="微信图片_20260912013634_33_2.jpg" alt="旅行照片5"></div>
-                <div class="travel-item">< img src="微信图片_20260912013635_34_2.jpg" alt="旅行照片6"></div>
-                <div class="travel-item">< img src="微信图片_20260912013636_35_2.jpg" alt="旅行照片7"></div>
-                <div class="travel-item">< img src="微信图片_20260912013637_36_2.jpg" alt="旅行照片8"></div>
-                <div class="travel-item">< img src="微信图片_20260912013638_37_2.jpg" alt="旅行照片9"></div>
+                <div class="travel-item"><img src="1.jpg" alt="旅行照片1"></div>
+                <div class="travel-item"><img src="2.jpg" alt="旅行照片2"></div>
+                <div class="travel-item"><img src="3.jpg" alt="旅行照片3"></div>
+                <div class="travel-item"><img src="4.jpg" alt="旅行照片4"></div>
+                <div class="travel-item"><img src="5.jpg" alt="旅行照片5"></div>
+                <div class="travel-item"><img src="6.jpg" alt="旅行照片6"></div>
+                <div class="travel-item"><img src="7.jpg" alt="旅行照片7"></div>
+                <div class="travel-item"><img src="8.jpg" alt="旅行照片8"></div>
+                <div class="travel-item"><img src="9.jpg" alt="旅行照片9"></div>
             </div>
         </section>
 
