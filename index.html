@@ -33,18 +33,28 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* ========== 导航栏：滚动时毛玻璃增强 ========== */
         header {
             position: sticky; top: 0;
-            background-color: rgba(10, 51, 35, 0.85);
-            backdrop-filter: blur(10px); z-index: 100;
+            background-color: rgba(10, 51, 35, 0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 100;
             padding: 20px 0 15px; text-align: center;
+            border-bottom: 1px solid transparent;
+            transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+        }
+        header.scrolled {
+            background-color: rgba(10, 51, 35, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-color);
         }
-        nav ul { display: flex; justify-content: center; gap: 30px; list-style: none; }
+        nav ul { display: flex; justify-content: center; gap: 30px; list-style: none; flex-wrap: wrap; }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: color 0.3s ease; letter-spacing: 1px; }
         nav a:hover { color: var(--accent); }
 
-        /* --- 首屏自我介绍（夸张排版） --- */
+        /* ========== 首屏：渐入上浮动画 ========== */
         .hero-section {
             max-width: 1100px;
             margin: 60px auto 0;
@@ -64,6 +74,9 @@
             text-transform: uppercase;
             margin-bottom: 8px;
             font-weight: 600;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0s;
         }
         .hero-name {
             font-family: "Georgia", "Times New Roman", serif;
@@ -77,6 +90,9 @@
             margin-left: -10px;
             transform: rotate(-4deg);
             display: inline-block;
+            opacity: 0;
+            animation: fadeUp 0.9s ease forwards;
+            animation-delay: 0.25s;
         }
         .hero-desc {
             font-size: 1.15rem;
@@ -86,6 +102,9 @@
             line-height: 2;
             font-weight: 500;
             letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeUp 0.9s ease forwards;
+            animation-delay: 0.5s;
         }
         .hero-oval {
             display: inline-block;
@@ -98,10 +117,17 @@
             transform: rotate(-2deg);
             max-width: fit-content;
             letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeUp 0.9s ease forwards;
+            animation-delay: 0.75s;
         }
 
-        /* 右侧头像拼贴（恢复彩色） */
-        .hero-right { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; }
+        .hero-right {
+            flex: 1; display: flex; justify-content: center; align-items: center; position: relative;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 0.35s;
+        }
         .avatar-wrapper { position: relative; width: 300px; height: 340px; display: flex; justify-content: center; align-items: center; }
         .avatar-card {
             position: absolute; width: 100%; height: 100%; background: var(--accent);
@@ -128,8 +154,83 @@
             50% { transform: translateY(-10px) rotate(20deg); }
             100% { transform: translateY(0px) rotate(15deg); }
         }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px) rotate(-4deg); }
+            to { opacity: 1; transform: translateY(0) rotate(-4deg); }
+        }
+        /* 非旋转元素的淡入 */
+        .hero-greeting, .hero-desc, .hero-oval, .hero-right {
+            animation-name: fadeUpSimple;
+        }
+        @keyframes fadeUpSimple {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-oval {
+            animation-name: fadeUpOval;
+        }
+        @keyframes fadeUpOval {
+            from { opacity: 0; transform: translateY(24px) rotate(-2deg); }
+            to { opacity: 1; transform: translateY(0) rotate(-2deg); }
+        }
+        .hero-name {
+            animation-name: fadeUpName;
+        }
+        @keyframes fadeUpName {
+            from { opacity: 0; transform: translateY(24px) rotate(-4deg); }
+            to { opacity: 1; transform: translateY(0) rotate(-4deg); }
+        }
 
-        /* --- 旅行板块：复古胶片效果，单独一整排 --- */
+        /* ========== About 区 ========== */
+        #about {
+            max-width: 1100px;
+            margin: 70px auto 0;
+            padding: 0 20px;
+        }
+        .about-card {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .about-photo {
+            flex-shrink: 0;
+            width: 180px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 4px solid var(--text-main);
+            box-shadow: 6px 6px 0 var(--accent), -2px -2px 0 var(--bg-start);
+            transform: rotate(-3deg);
+            transition: transform 0.4s ease;
+        }
+        .about-card:hover .about-photo {
+            transform: rotate(-1deg) scale(1.02);
+        }
+        .about-text { flex: 1; }
+        .about-label {
+            font-family: "Georgia", serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .about-text p {
+            font-size: 1rem;
+            line-height: 2;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+        .about-text p:last-child { margin-bottom: 0; }
+
+        /* ========== 旅行胶片 ========== */
         #travel {
             width: 100%;
             max-width: 1100px;
@@ -145,82 +246,44 @@
             overflow: hidden;
             border: 1px solid #333;
         }
-        .film-header {
-            text-align: center;
-            padding: 30px 20px 15px;
-            background: #111;
-        }
+        .film-header { text-align: center; padding: 30px 20px 15px; background: #111; }
         .film-title-en {
-            font-family: "Georgia", serif;
-            font-size: 2rem;
-            font-style: italic;
-            color: var(--text-main);
-            margin-bottom: 8px;
-            letter-spacing: 2px;
+            font-family: "Georgia", serif; font-size: 2rem; font-style: italic;
+            color: var(--text-main); margin-bottom: 8px; letter-spacing: 2px;
         }
-        .film-title-cn {
-            font-size: 1rem;
-            color: var(--text-muted);
-            letter-spacing: 6px;
-        }
+        .film-title-cn { font-size: 1rem; color: var(--text-muted); letter-spacing: 6px; }
         .film-sprocket {
             height: 16px;
             background: repeating-linear-gradient(90deg, #111 0px, #111 12px, #fff 12px, #fff 24px);
-            background-size: 24px 100%;
-            margin: 8px 0;
-            opacity: 0.9;
+            background-size: 24px 100%; margin: 8px 0; opacity: 0.9;
         }
         .film-frames {
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding: 15px 25px;
-            scrollbar-width: none; /* Firefox 隐藏滚动条 */
-            -ms-overflow-style: none; /* IE/Edge 隐藏滚动条 */
-            scroll-behavior: smooth;
-            scroll-snap-type: x mandatory; /* 胶片滚动吸附 */
-            -webkit-overflow-scrolling: touch; /* 移动端顺滑滚动 */
+            display: flex; overflow-x: auto; gap: 15px; padding: 15px 25px;
+            scrollbar-width: none; -ms-overflow-style: none;
+            scroll-behavior: smooth; scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
-        .film-frames::-webkit-scrollbar {
-            display: none; /* Chrome/Safari 隐藏滚动条 */
-        }
+        .film-frames::-webkit-scrollbar { display: none; }
         .film-frame {
-            flex-shrink: 0;
-            width: 220px;
-            height: 220px;
-            border: 3px solid #222;
-            background: #000;
-            border-radius: 4px;
+            flex-shrink: 0; width: 220px; height: 220px;
+            border: 3px solid #222; background: #000; border-radius: 4px;
             cursor: zoom-in;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             -webkit-box-reflect: below 4px linear-gradient(transparent, transparent 50%, rgba(255,255,255,0.15));
-            scroll-snap-align: center; /* 滑动时居中吸附 */
+            scroll-snap-align: center;
         }
         .film-frame:hover {
-            transform: scale(1.08);
-            z-index: 10;
+            transform: scale(1.08); z-index: 10;
             box-shadow: 0 0 20px rgba(211, 150, 140, 0.6);
         }
-        .film-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+        .film-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* --- 记录 和 ing 并排布局 --- */
+        /* ========== 记录 / ing 并排 ========== */
         .bottom-container {
-            max-width: 1100px;
-            margin: 0 auto 60px;
-            padding: 0 20px;
-            display: flex;
-            gap: 40px;
-            align-items: flex-start;
+            max-width: 1100px; margin: 0 auto 60px; padding: 0 20px;
+            display: flex; gap: 40px; align-items: flex-start;
         }
-        .bottom-column {
-            flex: 1;
-            width: 100%;
-        }
+        .bottom-column { flex: 1; width: 100%; }
 
         .section-title {
             font-family: "Georgia", "Times New Roman", serif;
@@ -238,12 +301,13 @@
         .essay-card {
             background: var(--card-bg); padding: 25px; border-radius: 16px;
             box-shadow: var(--card-shadow); border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .essay-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(211, 150, 140, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 18px 45px rgba(211, 150, 140, 0.25);
         }
         .essay-card h3 { 
             font-family: "Georgia", serif; font-size: 1.05rem; font-weight: 600; 
@@ -266,38 +330,160 @@
         .full-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
         .full-content::-webkit-scrollbar-track { background: rgba(10, 51, 35, 0.5); }
 
+        /* ========== Contact 区 ========== */
+        #contact {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 45px 40px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .contact-lead {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+        }
+        .contact-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+        .contact-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: rgba(10, 51, 35, 0.55);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-main);
+            transition: all 0.35s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .contact-icon svg {
+            width: 22px;
+            height: 22px;
+            transition: transform 0.35s ease;
+        }
+        .contact-icon:hover {
+            color: #0A3323;
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px rgba(211, 150, 140, 0.4);
+        }
+        .contact-icon:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* ========== 留言区 ========== */
+        #guestbook { max-width: 1100px; margin: 0 auto 80px; padding: 0 20px; }
+        .guestbook-card {
+            background: var(--card-bg); border-radius: 16px; padding: 35px 30px;
+            border: 1px solid var(--border-color); box-shadow: var(--card-shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .guestbook-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 35px; padding-bottom: 30px; border-bottom: 1px dashed var(--border-color); }
+        .guestbook-row { display: flex; gap: 15px; }
+        .guestbook-input, .guestbook-textarea {
+            background: rgba(10, 51, 35, 0.5); border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 12px 18px; color: var(--text-main);
+            font-family: inherit; font-size: 0.95rem; outline: none; width: 100%; resize: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .guestbook-input::placeholder, .guestbook-textarea::placeholder { color: rgba(131, 153, 88, 0.7); font-style: italic; }
+        .guestbook-input:focus, .guestbook-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(211, 150, 140, 0.15); }
+        .guestbook-textarea { min-height: 100px; line-height: 1.8; }
+        .guestbook-submit {
+            align-self: flex-end; background: var(--accent); color: #0A3323;
+            border: none; padding: 12px 36px; border-radius: 30px;
+            font-family: inherit; font-size: 0.95rem; font-weight: 600;
+            letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(211, 150, 140, 0.3);
+        }
+        .guestbook-submit:hover { background: #F7F4D5; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(247, 244, 213, 0.35); }
+        .guestbook-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .guestbook-list { display: flex; flex-direction: column; gap: 18px; max-height: 500px; overflow-y: auto; padding-right: 10px; }
+        .guestbook-list::-webkit-scrollbar { width: 6px; }
+        .guestbook-list::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+        .guestbook-list::-webkit-scrollbar-track { background: rgba(10, 51, 35, 0.5); }
+        .message-item {
+            background: rgba(10, 51, 35, 0.55); border-left: 3px solid var(--accent);
+            border-radius: 0 12px 12px 0; padding: 18px 20px;
+            animation: fadeIn 0.4s ease;
+        }
+        .message-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+        .message-name { font-family: "Georgia", serif; font-weight: 600; color: var(--accent); font-size: 0.95rem; letter-spacing: 1px; }
+        .message-time { font-size: 0.75rem; color: var(--text-muted); font-style: italic; }
+        .message-content { color: rgba(247, 244, 213, 0.9); font-size: 0.9rem; line-height: 1.9; white-space: pre-wrap; word-break: break-word; }
+        .guestbook-empty { text-align: center; color: var(--text-muted); font-style: italic; font-size: 0.9rem; padding: 20px 0; }
+
         footer { text-align: center; padding: 40px 0; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1px; }
 
-        /* --- 移动端适配 --- */
+        /* ========== 移动端 ========== */
         @media (max-width: 768px) {
             .hero-section { flex-direction: column-reverse; text-align: center; margin-top: 30px; gap: 30px; }
             .hero-left { align-items: center; }
             .hero-name { font-size: 5rem; margin-left: 0; text-shadow: 4px 4px 0px var(--bg-start), 8px 8px 0px var(--accent); }
             .hero-oval { transform: rotate(0deg); }
+            @keyframes fadeUpOval {
+                from { opacity: 0; transform: translateY(24px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
             .avatar-wrapper { width: 240px; height: 280px; }
             .hero-greeting { letter-spacing: 4px; }
+
+            #about { margin-top: 50px; }
+            .about-card { flex-direction: column; padding: 30px 25px; gap: 25px; text-align: center; }
+            .about-photo { width: 140px; height: 175px; }
 
             .film-title-en { font-size: 1.5rem; }
             .film-title-cn { font-size: 0.85rem; letter-spacing: 3px; }
             .film-frame { width: 160px; height: 160px; }
 
             .bottom-container { flex-direction: column; gap: 40px; }
+            .contact-card { padding: 35px 25px; }
+            .contact-icons { gap: 16px; }
+            .contact-icon { width: 48px; height: 48px; }
+            .contact-icon svg { width: 20px; height: 20px; }
+
+            .guestbook-card { padding: 25px 20px; }
+            .guestbook-row { flex-direction: column; }
+            .guestbook-submit { align-self: stretch; }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <header id="site-header">
         <nav>
             <ul>
+                <li><a href="#about">关于</a></li>
                 <li><a href="#travel">旅行</a></li>
                 <li><a href="#journal">记录</a></li>
                 <li><a href="#ing">ing</a></li>
+                <li><a href="#contact">联系</a></li>
+                <li><a href="#guestbook">Guestbook</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- 首屏自我介绍（夸张排版，彩色头像） -->
+    <!-- ========== 首屏 ========== -->
     <section class="hero-section">
         <div class="hero-left">
             <p class="hero-greeting">HELLO, I'M</p>
@@ -319,7 +505,19 @@
         </div>
     </section>
 
-    <!-- 旅行板块：复古胶片效果，独立一排 -->
+    <!-- ========== About 区 ========== -->
+    <section id="about">
+        <div class="about-card">
+            <img class="about-photo" src="avatar.jpg" alt="Zoey 的照片">
+            <div class="about-text">
+                <p class="about-label">About</p>
+                <p>一个 05 年的射手座，喜欢用照片和文字记录日常。</p>
+                <p>旅行、散步、观察窗外，都是我认识世界的方式。这里是我留存碎片的地方——如果你也刚好路过，欢迎随意逛逛。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 旅行胶片 ========== -->
     <section id="travel">
         <h2 class="section-title">旅行</h2>
         <div class="film-container">
@@ -328,35 +526,27 @@
                 <p class="film-title-cn">和zoey的眼睛一起看</p>
             </div>
             <div class="film-sprocket"></div>
-            <div class="film-frames" id="film-frames">
-                <!-- 照片由 JavaScript 动态生成 -->
-            </div>
+            <div class="film-frames" id="film-frames"></div>
             <div class="film-sprocket"></div>
         </div>
     </section>
 
-    <!-- 记录 和 ing 并排布局 -->
+    <!-- ========== 记录 / ing ========== -->
     <div class="bottom-container">
-        <!-- 记录板块 -->
         <section id="journal" class="bottom-column">
             <h2 class="section-title">记录</h2>
             <div class="essay-list">
-                
                 <div class="essay-card">
                     <h3>不是每个人都要上什么台面，这所谓台面也不知道是谁搭的戏台。</h3>
                     <div class="essay-date">—— 生活碎语</div>
                 </div>
-
                 <div class="essay-card">
                     <h3>山水之哲</h3>
                     <div class="essay-date">于 2026 年秋</div>
                     <div class="essay-excerpt">水边的哲学是不舍昼夜，山地的哲学是不知日月。</div>
-                    <div class="full-content">
-                        水边的哲学是不舍昼夜，山地的哲学是不知日月。
-                    </div>
+                    <div class="full-content">水边的哲学是不舍昼夜，山地的哲学是不知日月。</div>
                     <span class="read-more" onclick="toggleEssay(this)">阅读全文 ↓</span>
                 </div>
-
                 <div class="essay-card">
                     <h3>流浪的本性</h3>
                     <div class="essay-date">于巴塞罗那的梦中</div>
@@ -369,11 +559,9 @@
             </div>
         </section>
 
-        <!-- ing 板块 -->
         <section id="ing" class="bottom-column">
             <h2 class="section-title">ing</h2>
             <div class="essay-list">
-                
                 <div class="essay-card">
                     <h3>镰仓的夏天永不落幕</h3>
                     <div class="essay-date">于镰仓的夏日</div>
@@ -385,20 +573,77 @@
                     </div>
                     <span class="read-more" onclick="toggleEssay(this)">阅读全文 ↓</span>
                 </div>
-
             </div>
         </section>
     </div>
 
+    <!-- ========== Contact 区 ========== -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-card">
+            <p class="contact-lead">Let's keep in touch ✦</p>
+            <div class="contact-icons">
+                <!-- 邮箱 -->
+                <a class="contact-icon" href="mailto:18458868013@163.com" title="Email" aria-label="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="5" width="18" height="14" rx="2"/>
+                        <path d="M3 7l9 6 9-6"/>
+                    </svg>
+                </a>
+                <!-- 小红书 -->
+                <a class="contact-icon" href="#" title="小红书" aria-label="小红书">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="3"/>
+                        <path d="M8 9h8M8 13h8M8 17h5"/>
+                    </svg>
+                </a>
+                <!-- Instagram -->
+                <a class="contact-icon" href="#" title="Instagram" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 留言区 ========== -->
+    <section id="guestbook">
+        <h2 class="section-title">Guestbook</h2>
+        <div class="guestbook-card">
+            <form class="guestbook-form" id="guestbook-form">
+                <div class="guestbook-row">
+                    <input type="text" class="guestbook-input" id="guest-name" placeholder="Your name..." maxlength="20" required>
+                </div>
+                <textarea class="guestbook-textarea" id="guest-message" placeholder="Leave a message..." maxlength="300" required></textarea>
+                <button type="submit" class="guestbook-submit">SEND</button>
+            </form>
+            <div class="guestbook-list" id="guestbook-list">
+                <p class="guestbook-empty">Loading messages...</p>
+            </div>
+        </div>
+    </section>
+
     <footer>&copy; 2026 Zoeyyy. All Rights Reserved.</footer>
 
-    <!-- 灯箱 -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
         <img id="lightbox-img" src="" alt="放大照片">
     </div>
 
     <script>
+        // ========== 导航栏滚动毛玻璃 ==========
+        const siteHeader = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                siteHeader.classList.add('scrolled');
+            } else {
+                siteHeader.classList.remove('scrolled');
+            }
+        });
+
         // 平滑滚动
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -420,48 +665,127 @@
             }
         }
 
-        // --- 旅行照片胶片逻辑 ---
+        // ========== 旅行照片胶片 ==========
         const framesContainer = document.getElementById('film-frames');
         const totalPhotos = 26;
-
-        // 动态生成 26 张照片胶片
         for (let i = 1; i <= totalPhotos; i++) {
             const frame = document.createElement('div');
             frame.className = 'film-frame';
-            
             const img = document.createElement('img');
             img.src = `${i}.jpg`;
             img.alt = `旅行照片${i}`;
             img.loading = 'lazy';
-            
-            // 点击放大
-            frame.onclick = (e) => {
-                e.stopPropagation();
-                openLightbox(img.src);
-            };
-            
+            frame.onclick = (e) => { e.stopPropagation(); openLightbox(img.src); };
             frame.appendChild(img);
             framesContainer.appendChild(frame);
         }
 
-        // --- 灯箱逻辑 ---
+        // 自动滚动
+        const step = 220 + 15;
+        let isPaused = false;
+        function autoScrollNext() {
+            if (isPaused) return;
+            const maxScrollLeft = framesContainer.scrollWidth - framesContainer.clientWidth;
+            if (framesContainer.scrollLeft >= maxScrollLeft - 5) {
+                framesContainer.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                framesContainer.scrollBy({ left: step, behavior: 'smooth' });
+            }
+        }
+        setInterval(autoScrollNext, 10000);
+        framesContainer.addEventListener('mouseenter', () => { isPaused = true; });
+        framesContainer.addEventListener('mouseleave', () => { isPaused = false; });
+
+        // ========== 灯箱 ==========
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-
         function openLightbox(src) {
             lightboxImg.src = src;
             lightbox.style.display = 'flex';
             void lightbox.offsetWidth;
             lightbox.classList.add('show');
         }
-
         function closeLightbox() {
             lightbox.classList.remove('show');
-            setTimeout(() => {
-                lightbox.style.display = 'none';
-                lightboxImg.src = '';
-            }, 300);
+            setTimeout(() => { lightbox.style.display = 'none'; lightboxImg.src = ''; }, 300);
         }
+
+        // ========== 留言区 ==========
+        // ⚠️ 把下面两个值换成你 JSONBin 的真实值
+        const BIN_ID  = '在这里填你的BIN_ID';
+        const API_KEY = '在这里填你的X-Master-Key';
+        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+        async function loadMessages() {
+            const res = await fetch(`${API_URL}/latest`, { headers: { 'X-Master-Key': API_KEY } });
+            if (!res.ok) throw new Error('加载失败');
+            const data = await res.json();
+            return (data.record && data.record.messages) || [];
+        }
+
+        async function saveMessages(messages) {
+            const res = await fetch(API_URL, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+                body: JSON.stringify({ messages })
+            });
+            if (!res.ok) throw new Error('保存失败');
+        }
+
+        function formatTime(ts) {
+            const d = new Date(ts); const p = n => n.toString().padStart(2, '0');
+            return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+        }
+        function esc(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
+
+        async function renderMessages() {
+            const list = document.getElementById('guestbook-list');
+            try {
+                const messages = await loadMessages();
+                if (messages.length === 0) {
+                    list.innerHTML = '<p class="guestbook-empty">No messages yet. Be the first to leave one ✎</p>';
+                    return;
+                }
+                const sorted = messages.slice().sort((a, b) => b.time - a.time);
+                list.innerHTML = sorted.map(m => `
+                    <div class="message-item">
+                        <div class="message-header">
+                            <span class="message-name">${esc(m.name)}</span>
+                            <span class="message-time">${formatTime(m.time)}</span>
+                        </div>
+                        <div class="message-content">${esc(m.content)}</div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = '<p class="guestbook-empty">留言加载失败，请稍后再试。</p>';
+                console.error(e);
+            }
+        }
+
+        document.getElementById('guestbook-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('guest-name');
+            const msgInput  = document.getElementById('guest-message');
+            const btn = this.querySelector('.guestbook-submit');
+            const name = nameInput.value.trim();
+            const content = msgInput.value.trim();
+            if (!name || !content) return;
+            btn.disabled = true; btn.textContent = 'SENDING...';
+            try {
+                const messages = await loadMessages();
+                messages.push({ name, content, time: Date.now() });
+                await saveMessages(messages);
+                msgInput.value = '';
+                await renderMessages();
+            } catch (err) {
+                alert('留言失败：' + err.message);
+                console.error(err);
+            } finally {
+                btn.disabled = false; btn.textContent = 'SEND';
+            }
+        });
+
+        renderMessages();
     </script>
 </body>
 </html>
