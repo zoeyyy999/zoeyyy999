@@ -33,7 +33,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ========== 导航栏：滚动时毛玻璃增强 ========== */
         header {
             position: sticky; top: 0;
             background-color: rgba(10, 51, 35, 0.5);
@@ -54,7 +53,6 @@
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.95rem; transition: color 0.3s ease; letter-spacing: 1px; }
         nav a:hover { color: var(--accent); }
 
-        /* ========== 首屏：渐入上浮动画 ========== */
         .hero-section {
             max-width: 1100px;
             margin: 60px auto 0;
@@ -75,7 +73,7 @@
             margin-bottom: 8px;
             font-weight: 600;
             opacity: 0;
-            animation: fadeUp 0.8s ease forwards;
+            animation: fadeUpSimple 0.8s ease forwards;
             animation-delay: 0s;
         }
         .hero-name {
@@ -88,10 +86,9 @@
             text-shadow: 6px 6px 0px var(--bg-start), 12px 12px 0px var(--accent);
             margin-bottom: 30px;
             margin-left: -10px;
-            transform: rotate(-4deg);
             display: inline-block;
             opacity: 0;
-            animation: fadeUp 0.9s ease forwards;
+            animation: fadeUpName 0.9s ease forwards;
             animation-delay: 0.25s;
         }
         .hero-desc {
@@ -103,7 +100,7 @@
             font-weight: 500;
             letter-spacing: 1px;
             opacity: 0;
-            animation: fadeUp 0.9s ease forwards;
+            animation: fadeUpSimple 0.9s ease forwards;
             animation-delay: 0.5s;
         }
         .hero-oval {
@@ -114,18 +111,17 @@
             font-size: 0.95rem;
             color: var(--text-main);
             font-style: italic;
-            transform: rotate(-2deg);
             max-width: fit-content;
             letter-spacing: 2px;
             opacity: 0;
-            animation: fadeUp 0.9s ease forwards;
+            animation: fadeUpOval 0.9s ease forwards;
             animation-delay: 0.75s;
         }
 
         .hero-right {
             flex: 1; display: flex; justify-content: center; align-items: center; position: relative;
             opacity: 0;
-            animation: fadeUp 1s ease forwards;
+            animation: fadeUpSimple 1s ease forwards;
             animation-delay: 0.35s;
         }
         .avatar-wrapper { position: relative; width: 300px; height: 340px; display: flex; justify-content: center; align-items: center; }
@@ -154,34 +150,19 @@
             50% { transform: translateY(-10px) rotate(20deg); }
             100% { transform: translateY(0px) rotate(15deg); }
         }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px) rotate(-4deg); }
-            to { opacity: 1; transform: translateY(0) rotate(-4deg); }
-        }
-        /* 非旋转元素的淡入 */
-        .hero-greeting, .hero-desc, .hero-oval, .hero-right {
-            animation-name: fadeUpSimple;
-        }
         @keyframes fadeUpSimple {
             from { opacity: 0; transform: translateY(24px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        .hero-oval {
-            animation-name: fadeUpOval;
-        }
-        @keyframes fadeUpOval {
-            from { opacity: 0; transform: translateY(24px) rotate(-2deg); }
-            to { opacity: 1; transform: translateY(0) rotate(-2deg); }
-        }
-        .hero-name {
-            animation-name: fadeUpName;
         }
         @keyframes fadeUpName {
             from { opacity: 0; transform: translateY(24px) rotate(-4deg); }
             to { opacity: 1; transform: translateY(0) rotate(-4deg); }
         }
+        @keyframes fadeUpOval {
+            from { opacity: 0; transform: translateY(24px) rotate(-2deg); }
+            to { opacity: 1; transform: translateY(0) rotate(-2deg); }
+        }
 
-        /* ========== About 区 ========== */
         #about {
             max-width: 1100px;
             margin: 70px auto 0;
@@ -230,7 +211,6 @@
         }
         .about-text p:last-child { margin-bottom: 0; }
 
-        /* ========== 旅行胶片 ========== */
         #travel {
             width: 100%;
             max-width: 1100px;
@@ -278,7 +258,6 @@
         }
         .film-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* ========== 记录 / ing 并排 ========== */
         .bottom-container {
             max-width: 1100px; margin: 0 auto 60px; padding: 0 20px;
             display: flex; gap: 40px; align-items: flex-start;
@@ -330,7 +309,6 @@
         .full-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
         .full-content::-webkit-scrollbar-track { background: rgba(10, 51, 35, 0.5); }
 
-        /* ========== Contact 区 ========== */
         #contact {
             max-width: 1100px;
             margin: 0 auto 60px;
@@ -390,7 +368,6 @@
             transform: scale(1.1);
         }
 
-        /* ========== 留言区 ========== */
         #guestbook { max-width: 1100px; margin: 0 auto 80px; padding: 0 20px; }
         .guestbook-card {
             background: var(--card-bg); border-radius: 16px; padding: 35px 30px;
@@ -435,16 +412,11 @@
 
         footer { text-align: center; padding: 40px 0; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1px; }
 
-        /* ========== 移动端 ========== */
         @media (max-width: 768px) {
             .hero-section { flex-direction: column-reverse; text-align: center; margin-top: 30px; gap: 30px; }
             .hero-left { align-items: center; }
             .hero-name { font-size: 5rem; margin-left: 0; text-shadow: 4px 4px 0px var(--bg-start), 8px 8px 0px var(--accent); }
             .hero-oval { transform: rotate(0deg); }
-            @keyframes fadeUpOval {
-                from { opacity: 0; transform: translateY(24px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
             .avatar-wrapper { width: 240px; height: 280px; }
             .hero-greeting { letter-spacing: 4px; }
 
@@ -483,7 +455,6 @@
         </nav>
     </header>
 
-    <!-- ========== 首屏 ========== -->
     <section class="hero-section">
         <div class="hero-left">
             <p class="hero-greeting">HELLO, I'M</p>
@@ -505,19 +476,17 @@
         </div>
     </section>
 
-    <!-- ========== About 区 ========== -->
+    <!-- About 区（精简版） -->
     <section id="about">
         <div class="about-card">
             <img class="about-photo" src="avatar.jpg" alt="Zoey 的照片">
             <div class="about-text">
                 <p class="about-label">About</p>
                 <p>一个 05 年的射手座，喜欢用照片和文字记录日常。</p>
-                <p>旅行、散步、观察窗外，都是我认识世界的方式。这里是我留存碎片的地方——如果你也刚好路过，欢迎随意逛逛。</p>
             </div>
         </div>
     </section>
 
-    <!-- ========== 旅行胶片 ========== -->
     <section id="travel">
         <h2 class="section-title">旅行</h2>
         <div class="film-container">
@@ -531,7 +500,6 @@
         </div>
     </section>
 
-    <!-- ========== 记录 / ing ========== -->
     <div class="bottom-container">
         <section id="journal" class="bottom-column">
             <h2 class="section-title">记录</h2>
@@ -577,7 +545,6 @@
         </section>
     </div>
 
-    <!-- ========== Contact 区 ========== -->
     <section id="contact">
         <h2 class="section-title">Contact</h2>
         <div class="contact-card">
@@ -590,26 +557,17 @@
                         <path d="M3 7l9 6 9-6"/>
                     </svg>
                 </a>
-                <!-- 小红书 -->
-                <a class="contact-icon" href="#" title="小红书" aria-label="小红书">
+                <!-- 微信 -->
+                <a class="contact-icon" href="javascript:void(0)" onclick="copyWechat()" title="微信" aria-label="微信">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="4" y="4" width="16" height="16" rx="3"/>
-                        <path d="M8 9h8M8 13h8M8 17h5"/>
-                    </svg>
-                </a>
-                <!-- Instagram -->
-                <a class="contact-icon" href="#" title="Instagram" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="5"/>
-                        <circle cx="12" cy="12" r="4"/>
-                        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+                        <path d="M8.5 10.5c0-2.5 2.5-4.5 5.5-4.5s5.5 2 5.5 4.5c0 1.5-1 2.8-2.5 3.6l.5 2-2-1.2c-.5.1-1 .2-1.5.2-3 0-5.5-2-5.5-4.6z"/>
+                        <path d="M4 16c0-2 2-3.5 4.5-3.5s4.5 1.5 4.5 3.5c0 1.2-.8 2.2-2 2.9l.4 1.6-1.6-1c-.4.1-.9.1-1.3.1-2.5 0-4.5-1.6-4.5-3.6z"/>
                     </svg>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- ========== 留言区 ========== -->
     <section id="guestbook">
         <h2 class="section-title">Guestbook</h2>
         <div class="guestbook-card">
@@ -634,7 +592,7 @@
     </div>
 
     <script>
-        // ========== 导航栏滚动毛玻璃 ==========
+        // 导航栏滚动毛玻璃
         const siteHeader = document.getElementById('site-header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 40) {
@@ -708,6 +666,20 @@
         function closeLightbox() {
             lightbox.classList.remove('show');
             setTimeout(() => { lightbox.style.display = 'none'; lightboxImg.src = ''; }, 300);
+        }
+
+        // ========== 微信复制 ==========
+        function copyWechat() {
+            const wechatId = 'wxid_wsfa55n19ca022';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(wechatId).then(() => {
+                    alert('微信号已复制：' + wechatId + '\n请打开微信添加好友');
+                }).catch(() => {
+                    prompt('请手动复制微信号：', wechatId);
+                });
+            } else {
+                prompt('请手动复制微信号：', wechatId);
+            }
         }
 
         // ========== 留言区 ==========
